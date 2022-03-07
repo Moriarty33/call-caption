@@ -17,13 +17,19 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.moriarty33.callcaption"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "permissions": [
+        "RECORD_AUDIO",
+        "CAPTURE_AUDIO_OUTPUT"
+      ],
+      "package": "com.moriarty33.callcaption"
     },
     "web": {
       "favicon": "./assets/favicon.png"
