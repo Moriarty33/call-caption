@@ -4,6 +4,7 @@ import useRecordAudio from "../hooks/useRecordAudio";
 import { useCheckRecordAudioPermissions } from "../hooks/useCheckRecordAudioPermissions";
 import { Header } from "./Header";
 import RecordAudioPermission from "./RecordAudioPermission";
+import Messages from "./Messages";
 
 const Main = () => {
   const { recordAudioPermission, grantedAudioPermission } =
@@ -16,6 +17,7 @@ const Main = () => {
   return (
     <View>
       <Header />
+      <Messages />
     </View>
   );
 };
