@@ -32,11 +32,18 @@ export const audioSlice = createSlice({
         state.messages.push("");
       }
     },
+    cleanMessages: (state) => {
+      state.messages = initialState.messages;
+    },
   },
 });
 
-export const { setStatus, setLastMessage, makeLastMessageCompleted } =
-  audioSlice.actions;
+export const {
+  setStatus,
+  setLastMessage,
+  makeLastMessageCompleted,
+  cleanMessages,
+} = audioSlice.actions;
 
 export const selectStatus = (state: RootState) => state.audio.status;
 export const selectMessages = (state: RootState) => state.audio.messages;
