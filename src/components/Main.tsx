@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import RecordAudioHandler from "../handlers/RecordAudioHandler";
+import useRecordAudio from "../hooks/useRecordAudio";
 import { useCheckRecordAudioPermissions } from "../hooks/useCheckRecordAudioPermissions";
 import { Header } from "./Header";
 import RecordAudioPermission from "./RecordAudioPermission";
@@ -16,7 +16,6 @@ const Main = () => {
   return (
     <View>
       <Header />
-      <RecordAudioHandler />
     </View>
   );
 };

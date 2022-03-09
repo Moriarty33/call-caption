@@ -1,29 +1,27 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AudioStatus } from "../types/audioStatus";
 import { RootState } from "./index";
 
 export interface AudioState {
-  isRecording: boolean;
+  status: AudioStatus;
 }
 
 const initialState: AudioState = {
-  isRecording: false,
+  status: AudioStatus.notActive,
 };
 
 export const audioSlice = createSlice({
   name: "audio",
   initialState,
   reducers: {
-    startRecording: (state) => {
-      state.isRecording = true;
-    },
-    stopRecording: (state) => {
-      state.isRecording = false;
+    setStatus: (state, action: PayloadAction<AudioStatus>) => {
+      state.status = action.payload;
     },
   },
 });
 
-export const { startRecording, stopRecording } = audioSlice.actions;
+export const { setStatus } = audioSlice.actions;
 
-export const selectIsRecording = (state: RootState) => state.audio.isRecording;
+export const selectStatus = (state: RootState) => state.audio.status;
 
 export default audioSlice.reducer;

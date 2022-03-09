@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import LiveAudioStream from "react-native-live-audio-stream";
 import { audioOptions } from "../constants/audioOptions";
-import { useSocket } from "../hooks/useSocket";
+import { useSocket } from "./useSocket";
 
-const RecordAudioHandler = () => {
-  const { onData } = useSocket();
+const useRecordAudio = () => {
+  const { onData, start, stop } = useSocket();
 
   async function initApp() {
     LiveAudioStream.init(audioOptions);
@@ -15,7 +15,10 @@ const RecordAudioHandler = () => {
     initApp();
   }, []);
 
-  return null;
+  return {
+    start,
+    stop,
+  };
 };
 
-export default RecordAudioHandler;
+export default useRecordAudio;

@@ -1,27 +1,40 @@
 import React, { useMemo } from "react";
-import { Button, StyleSheet, View } from "react-native";
-import {
-  selectIsRecording,
-  startRecording,
-  stopRecording,
-} from "../store/audioSlice";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { Button, StyleSheet, Text, View } from "react-native";
+import useRecordAudio from "../hooks/useRecordAudio";
+import { selectStatus } from "../store/audioSlice";
+import { useAppSelector } from "../store/hooks";
+import { AudioStatus } from "../types/audioStatus";
 
 export function Header() {
-  const isRecording = useAppSelector(selectIsRecording);
-  const dispatch = useAppDispatch();
-  const title = useMemo(() => (isRecording ? "Stop" : "Start"), [isRecording]);
+  const { start, stop } = useRecordAudio();
+
+  const status = useAppSelector(selectStatus);
+
+  const title = useMemo(() => {
+    if (status === AudioStatus.notActive) {
+      return "Start";
+    }
+
+    if (status === AudioStatus.active) {
+      return "Stop";
+    }
+
+    return "Loading";
+  }, [status]);
 
   function toggle() {
-    if (isRecording) {
-      dispatch(stopRecording());
-    } else {
-      dispatch(startRecording());
+    if (status === AudioStatus.notActive) {
+      return start();
+    }
+
+    if (status === AudioStatus.active) {
+      return stop();
     }
   }
 
   return (
     <View style={styles.container}>
+      <Text>{status}</Text>
       <View>
         <Button title={title} onPress={toggle} />
       </View>
