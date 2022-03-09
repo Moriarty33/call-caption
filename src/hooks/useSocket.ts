@@ -1,12 +1,14 @@
 import axios from "axios";
-import { useEffect } from "react";
-import { selectIsRecording } from "../store/audioSlice";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { useRef } from "react";
+import LiveAudioStream from "react-native-live-audio-stream";
+import { setStatus } from "../store/audioSlice";
+import { useAppDispatch } from "../store/hooks";
+import { AudioStatus } from "../types/audioStatus";
+
 export function useSocket() {
   const apiKey = "be7cb5770ef14801916d8183acc649f6";
-  let socket: WebSocket | null = null;
+  const socket = useRef<WebSocket | null>();
   const dispatch = useAppDispatch();
-  const isRecording = useAppSelector(selectIsRecording);
 
   async function initSocket() {
     const response = await axios.post(
@@ -16,17 +18,18 @@ export function useSocket() {
     );
     const { data } = response;
 
-    socket = await new WebSocket(
+    socket.current = await new WebSocket(
       `wss://api.assemblyai.com/v2/realtime/ws?sample_rate=32000&token=${data.token}`
     );
 
-    if (!socket) {
+    if (!socket.current) {
+      dispatch(setStatus(AudioStatus.notActive));
       console.log("Socket not Opened");
       return;
     }
 
     const texts: any = {};
-    socket.onmessage = (message) => {
+    socket.current.onmessage = (message) => {
       let msg = "";
       const res = JSON.parse(message.data);
       console.log("res", res);
@@ -42,28 +45,44 @@ export function useSocket() {
       // setMessage(msg);
     };
 
-    socket.onopen = () => {
-      console.log("Socket Open");
+    socket.current.onopen = () => {
+      LiveAudioStream.start();
+      dispatch(setStatus(AudioStatus.active));
     };
 
-    socket.onerror = (event) => {
+    socket.current.onerror = (event) => {
       console.error("onerror", event);
-      socket!.close();
+      socket.current?.close();
     };
 
-    socket.onclose = (event) => {
+    socket.current.onclose = (event) => {
+      socket.current = null;
       console.log("onclose", event);
-      socket = null;
+      LiveAudioStream.stop();
+      dispatch(setStatus(AudioStatus.notActive));
     };
   }
 
   function onData(data: string) {
-    if (socket) {
-      socket.send(JSON.stringify({ audio_data: data }));
+    if (socket.current) {
+      socket.current.send(JSON.stringify({ audio_data: data }));
+    }
+  }
+
+  async function start() {
+    dispatch(setStatus(AudioStatus.init));
+    await initSocket();
+  }
+
+  function stop() {
+    if (socket.current) {
+      socket.current.close(1000, "Stop By User");
     }
   }
 
   return {
     onData,
+    start,
+    stop,
   };
 }
