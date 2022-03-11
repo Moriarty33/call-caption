@@ -287,9 +287,9 @@ PODS:
     - React-cxxreact (= 0.64.3)
     - React-jsi (= 0.64.3)
     - React-perflogger (= 0.64.3)
+  - RNCPicker (2.3.1):
+    - React-Core
   - RNLiveAudioStream (1.1.1):
-    - React
-  - RNSoundPlayer (0.11.3):
     - React
   - Yoga (1.14.0)
 
@@ -332,8 +332,8 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - RNLiveAudioStream (from `../node_modules/react-native-live-audio-stream`)
-  - RNSoundPlayer (from `../node_modules/react-native-sound-player`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -413,10 +413,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/runtimeexecutor"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNCPicker:
+    :path: "../node_modules/@react-native-picker/picker"
   RNLiveAudioStream:
     :path: "../node_modules/react-native-live-audio-stream"
-  RNSoundPlayer:
-    :path: "../node_modules/react-native-sound-player"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -458,8 +458,8 @@ SPEC CHECKSUMS:
   React-RCTVibration: c7f845861e79eae13dc1e8217a3cf47a3945b504
   React-runtimeexecutor: 493d9abb8b23c3f84e19ae221eeba92cadcb70dc
   ReactCommon: 8fea6422328e2fc093e25c9fac67adbcf0f04fb4
+  RNCPicker: f6c760d4b314585ff35165d8640d7917ae30afb1
   RNLiveAudioStream: 02584d52711b6b9f268cb371a4b1bdd76ab3e079
-  RNSoundPlayer: 6b5532fb8e9afe17af48e62813c80ad568aea5d3
   Yoga: e6ecf3fa25af9d4c87e94ad7d5d292eedef49749
 
 PODFILE CHECKSUM: ad39610a9eeb0289ef1376249a7e88aff66af8f1

@@ -48,9 +48,9 @@ MainButton.defaultProps = defaultProps;
 
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 4,
   },
   outlinedButton: {
     borderWidth: 1,

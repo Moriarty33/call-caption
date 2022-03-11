@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import useRecordAudio from "../hooks/useRecordAudio";
 import { cleanMessages, selectStatus } from "../store/audioSlice";
@@ -6,11 +6,15 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { AudioStatus } from "../types/audioStatus";
 import MainButton from "./MainButton";
 import Spinner from "./Spinner";
+import { audioOptions } from "../constants/audioOptions";
+import RNPickerSelect from "react-native-picker-select";
 
 export function Header() {
-  const { start, stop } = useRecordAudio();
+  const [audioSource, setAudioSource] = useState<number>(
+    audioOptions.audioSource
+  );
+  const { start, stop } = useRecordAudio(audioSource);
   const dispatch = useAppDispatch();
-
   const status = useAppSelector(selectStatus);
 
   function HeaderButton() {
@@ -51,13 +55,35 @@ export function Header() {
 
   return (
     <View style={styles.container}>
-      <HeaderButton />
-      <MainButton
-        title="Clean"
-        disabled={status === AudioStatus.init}
-        style={{ marginLeft: 16 }}
-        onPress={() => dispatch(cleanMessages())}
+      <Text>Audio Source</Text>
+      <RNPickerSelect
+        disabled={status !== AudioStatus.notActive}
+        placeholder={{}}
+        style={{
+          inputAndroid: styles.picker,
+        }}
+        value={audioSource}
+        onValueChange={setAudioSource}
+        items={[
+          { label: "Microphone", value: 1 },
+          { label: "Voice recognition", value: 6 },
+        ]}
       />
+      <View
+        style={{
+          flexDirection: "row",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <HeaderButton />
+        <MainButton
+          title="Clean"
+          disabled={status === AudioStatus.init}
+          style={{ marginLeft: 16 }}
+          onPress={() => dispatch(cleanMessages())}
+        />
+      </View>
     </View>
   );
 }
@@ -65,13 +91,16 @@ export function Header() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "rgba(0,0,0,0.025)",
-    flexDirection: "row",
-    display: "flex",
-    justifyContent: "space-between",
     paddingVertical: 16,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
     borderTopWidth: 1,
     borderColor: "rgba(0,0,0,0.05)",
+  },
+  picker: {
+    backgroundColor: "rgba(0,0,0,0.1)",
+    marginBottom: 8,
+    padding: 0,
+    margin: 0,
   },
 });
