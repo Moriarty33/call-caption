@@ -132,7 +132,7 @@ android {
     }
 
     defaultConfig {
-        applicationId 'com.moriarty33.callcaption'
+        applicationId 'com.moriarty33.callcaption1'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -28,7 +28,7 @@
       "permissions": [
         "RECORD_AUDIO"
       ],
-      "package": "com.moriarty33.callcaption"
+      "package": "com.moriarty33.callcaption1"
     },
     "web": {
       "favicon": "./assets/favicon.png"
