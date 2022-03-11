@@ -26,8 +26,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "permissions": [
-        "RECORD_AUDIO",
-        "CAPTURE_AUDIO_OUTPUT"
+        "RECORD_AUDIO"
       ],
       "package": "com.moriarty33.callcaption"
     },
